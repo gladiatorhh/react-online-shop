@@ -6,6 +6,7 @@ import DataInput from "../data-input/data-input.component";
 import Button from "../button/button.component";
 
 import "./sign-up-form.styles.scss";
+import { requestFormReset } from "react-dom";
 
 const defaultFormFields = {
     displayName: "",
@@ -32,11 +33,8 @@ const SignUpForm = () => {
             setFormFields(defaultFormFields);
         } catch (error) {
             alert("You sign in attempt has failed due to server errors")
-            console.log(error);
         }
     };
-
-    console.log(formFields)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
