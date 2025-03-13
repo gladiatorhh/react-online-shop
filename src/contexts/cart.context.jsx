@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 
 //#region outerFunctions
 const updateCartList = (cartList, product) => {
-    const itemInList = cartList.find(item => item.id == product.id);
+    const itemInList = cartList.find(item => item.id === product.id);
     if (itemInList) {
         return cartList.map(item => item.id === product.id ?
             { ...item, quantity: item.quantity + 1 }
@@ -17,7 +17,7 @@ const updateCartList = (cartList, product) => {
 }
 
 const increaseItemCount = (cartList, cartItem) => {
-    const itemInList = cartList.find(item => item.id == cartItem.id);
+    const itemInList = cartList.find(item => item.id === cartItem.id);
 
     if (itemInList) {
         return cartList.map(item => item.id === cartItem.id ?
@@ -30,7 +30,7 @@ const increaseItemCount = (cartList, cartItem) => {
 }
 
 const removeItemFromCartByCartItem = (cartList, cartItem) => {
-    const itemInList = cartList.find(item => item.id == cartItem.id);
+    const itemInList = cartList.find(item => item.id === cartItem.id);
 
     if (itemInList) {
         if (itemInList.quantity > 1) {

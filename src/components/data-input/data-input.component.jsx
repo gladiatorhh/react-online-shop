@@ -1,11 +1,11 @@
-import "./data-input.styles.scss"
+import { FormGroup, FormInputLabel, FormInput } from "./data-input.styles";
 
 const DataInput = ({ label, ...otherProps }) => {
     return (
-        <div className="group">
-            <input className="form-input" {...otherProps} />
-            {label && <label className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}>{label}</label>}
-        </div>);
+        <FormGroup>
+            <FormInput {...otherProps} />
+            {label && <FormInputLabel>{label}</FormInputLabel>}
+        </FormGroup>);
 }
 
 export default DataInput;

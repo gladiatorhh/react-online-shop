@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { requestFormReset } from "react-dom";
 
 import { createUserByEmailAndPassword, addUserFromAuth } from "../../utilities/firebase/firebase.utils";
 
@@ -7,8 +8,7 @@ import Button from "../button/button.component";
 import { UserContext } from "../../contexts/user.context";
 
 
-import "./sign-up-form.styles.scss";
-import { requestFormReset } from "react-dom";
+import { SingUpContainer } from "./sign-up-form.styles";
 
 const defaultFormFields = {
     displayName: "",
@@ -25,7 +25,7 @@ const SignUpForm = () => {
 
     const handelSubmit = async (event) => {
         event.preventDefault();
-        if (!displayName || !email || !password || !confirmPassword || password != confirmPassword) {
+        if (!displayName || !email || !password || !confirmPassword || password !== confirmPassword) {
             alert("Please check your provided information");
             return;
         }
@@ -45,7 +45,7 @@ const SignUpForm = () => {
     };
 
     return (
-        <div className="sign-up-container">
+        <SingUpContainer>
             <h2>Don't have an account?</h2>
             <span>Create one here!!!</span>
             <form onSubmit={handelSubmit}>
@@ -59,7 +59,7 @@ const SignUpForm = () => {
 
                 <Button type="submit">Sign Up</Button>
             </form>
-        </div>
+        </SingUpContainer>
     );
 }
 

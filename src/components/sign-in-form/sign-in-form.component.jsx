@@ -3,10 +3,10 @@ import { useContext, useState } from "react";
 import { signInWithGooglePopup, addUserFromAuth, signInWithEmailAndPasswordFromAuth } from "../../utilities/firebase/firebase.utils";
 
 import DataInput from "../data-input/data-input.component";
-import Button from "../button/button.component";
+import Button, { buttonTypes } from "../button/button.component";
 
 
-import "./sign-in-form.styles.scss";
+import { SignInContainer, SignInFormButtonsContainer } from "./sign-in-form.styles";
 
 
 const defaultFiles = {
@@ -45,17 +45,18 @@ const SignInForm = () => {
         }
     }
 
-    return (<div className="sign-in-container">
-        <h2>Have and account ? Sign in here</h2>
-        <form onSubmit={handelSubmit}>
-            <DataInput label="Email" type="email" required name="email" onChange={handelChange} value={email} />
-            <DataInput label="Password" type="password" required name="password" onChange={handelChange} value={password} />
-            <div className="sign-in-form-buttons">
-                <Button type="submit">Sign In</Button>
-                <Button buttonType="google" type="button" onClick={signInWithGooglePopup}>Sign in with google</Button>
-            </div>
-        </form>
-    </div>)
+    return (
+        <SignInContainer>
+            <h2>Have and account ? Sign in here</h2>
+            <form onSubmit={handelSubmit}>
+                <DataInput label="Email" type="email" required name="email" onChange={handelChange} value={email} />
+                <DataInput label="Password" type="password" required name="password" onChange={handelChange} value={password} />
+                <SignInFormButtonsContainer>
+                    <Button type="submit">Sign In</Button>
+                    <Button buttonType={buttonTypes.google} type="button" onClick={signInWithGooglePopup}>Sign in with google</Button>
+                </SignInFormButtonsContainer>
+            </form>
+        </SignInContainer>);
 }
 
 

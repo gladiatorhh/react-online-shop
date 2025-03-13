@@ -10,7 +10,7 @@ import { UserContext } from "../../contexts/user.context";
 import { CartContext } from "../../contexts/cart.context";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg"
-import "./navigation.styles.scss"
+import { NavigationContainer, LogoContainer, NavigationLinksContainer, NavigationLinks } from "./navigation.styles"
 
 
 const Navigation = () => {
@@ -23,25 +23,25 @@ const Navigation = () => {
     };
 
     return (<Fragment>
-        <div className="navigation">
-            <Link className="logo-container" to="/">
+        <NavigationContainer>
+            <LogoContainer to="/">
                 <CrwnLogo className="logo" />
-            </Link>
-            <div className="nav-links-container">
-                <Link className="nav-link" to="/shop" >SHOP</Link>
+            </LogoContainer>
+            <NavigationLinksContainer>
+                <NavigationLinks to="/shop" >SHOP</NavigationLinks>
                 {
                     userData ? (
-                        <span onClick={signOutHandler}>Sign out</span>
+                        <NavigationLinks as="span" onClick={signOutHandler}>Sign out</NavigationLinks>
                     ) : (
-                        <Link className="nav-link" to="/auth" >SIGN-IN</Link>
+                        <NavigationLinks to="/auth">SIGN-IN</NavigationLinks>
                     )
                 }
                 <CartIcon />
-            </div>
+            </NavigationLinksContainer>
             {
                 isDropdownVisible && <CartList />
             }
-        </div>
+        </NavigationContainer>
         <Outlet />
     </Fragment >);
 }

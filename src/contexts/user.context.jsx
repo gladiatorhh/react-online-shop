@@ -15,7 +15,6 @@ export const UserContextProvider = ({ children }) => {
             if (user) {
                 addUserFromAuth(user)
             }
-            console.log(user)
             setUserData(user);
         });
 
