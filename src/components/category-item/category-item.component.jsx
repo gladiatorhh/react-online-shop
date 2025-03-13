@@ -5,7 +5,7 @@ const Category = ({ category }) => {
 
     return (
         <CategoryContainer>
-            <BackgroundImage backgroundImage={imageUrl}></BackgroundImage>
+            <BackgroundImage background={imageUrl}></BackgroundImage>
             <CategoryBody>
                 <h2>{title}</h2>
                 <p>Shop Now</p>

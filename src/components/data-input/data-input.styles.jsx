@@ -6,7 +6,7 @@ const mainColor = "black";
 const shrinkLabel = css`
   top: -14px;
   font-size: 12px;
-  color: $main-color;
+  color: ${mainColor};
 `;
 
 export const FormGroup = styled.div`
@@ -19,7 +19,7 @@ export const FormGroup = styled.div`
 `;
 
 export const FormInputLabel = styled.label`
-  color: $sub-color;
+  color: ${subColor};
   font-size: 16px;
   font-weight: normal;
   position: absolute;
@@ -35,14 +35,14 @@ export const FormInputLabel = styled.label`
 export const FormInput = styled.input`
   background: none;
   background-color: white;
-  color: $sub-color;
+  color: ${subColor};
   font-size: 18px;
   padding: 10px 10px 10px 5px;
   display: block;
   width: 100%;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid $sub-color;
+  border-bottom: 1px solid ${subColor};
   margin: 25px 0;
 
   &:focus {
