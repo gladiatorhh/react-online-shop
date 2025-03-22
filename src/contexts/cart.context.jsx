@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useReducer } from "react";
+import { generateDispatchObj } from "../utilities/reducer/reducer.utils";
 
 //#region outerFunctions
 const updateCartList = (cartList, product) => {
@@ -54,6 +55,8 @@ const deleteItemFromCart = (cartList, cartItem) => {
 
 //#endregion
 
+//#region reducerTemplate
+
 export const CartContext = createContext({
     isDropdownVisible: false,
     setDropdownVisibility: () => { },
@@ -66,49 +69,81 @@ export const CartContext = createContext({
     totalPrice: 0,
 });
 
+export const CART_ACTION_TYPES = {
+    SET_DROPDOWN_VISIBLE: "SET_DROPDOWN_VISIBLE",
+    CHANGE_CART_ITEMS: "CHANGE_CART_ITEMS",
+}
+
+const cartReducer = (state, action) => {
+    const { type, payload } = action;
+
+    switch (type) {
+        case CART_ACTION_TYPES.SET_DROPDOWN_VISIBLE:
+            return { ...state, ...payload };
+        case CART_ACTION_TYPES.CHANGE_CART_ITEMS:
+            return { ...state, ...payload };
+        default:
+            throw new Error(`Unhandled type ${type} in userReducer`);
+    }
+}
+
+const CART_INITIAL_STATE = {
+    isDropdownVisible: false,
+    userCartItems: [],
+    cartItemsCount: 0,
+    totalPrice: 0,
+};
+
+//#endregion
 
 export const CartContextProvider = ({ children }) => {
-    //#region states
+    //#region reducerSettings
 
-    const [isDropdownVisible, setDropdownVisibility] = useState(false);
-    const [userCartItems, setUserCartItems] = useState([]);
-    const [cartItemsCount, setCartItemsCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
+
+
+    const {
+        isDropdownVisible,
+        userCartItems,
+        cartItemsCount,
+        totalPrice,
+    } = state;
 
     //#endregion
 
     //#region utilities
+
+    const updateUserCart = (cartItems) => {
+        const newCartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+        const calculatedTotalPrice = cartItems.reduce((total, item) => total += item.quantity * item.price, 0);
+
+        dispatch(generateDispatchObj(CART_ACTION_TYPES.CHANGE_CART_ITEMS, {
+            userCartItems: cartItems,
+            cartItemsCount: newCartItemsCount,
+            totalPrice: calculatedTotalPrice,
+        }));
+    }
+
+
     const addCartItem = (product) => {
-        setUserCartItems(updateCartList(userCartItems, product));
+        updateUserCart(updateCartList(userCartItems, product));
     }
 
     const increaseItemCountInCart = (item) => {
-        setUserCartItems(increaseItemCount(userCartItems, item));
+        updateUserCart(increaseItemCount(userCartItems, item));
     }
 
     const removeItemFromCart = (item) => {
-        setUserCartItems(removeItemFromCartByCartItem(userCartItems, item));
+        updateUserCart(removeItemFromCartByCartItem(userCartItems, item));
     }
 
     const clearItemFromCart = (item) => {
-        setUserCartItems(deleteItemFromCart(userCartItems, item))
+        updateUserCart(deleteItemFromCart(userCartItems, item));
     }
-    //#endregion
 
-    //#region  useEffects
-
-    useEffect(() => {
-        const newCartItemsCount = userCartItems.reduce((total, item) => total + item.quantity, 0);
-
-        setCartItemsCount(newCartItemsCount);
-
-    }, [userCartItems]);
-
-    useEffect(() => {
-        const calculatedTotalPrice = userCartItems.reduce((total, item) => total += item.quantity * item.price, 0);
-
-        setTotalPrice(calculatedTotalPrice);
-    }, [userCartItems]);
+    const setDropdownVisibility = () => {
+        dispatch(generateDispatchObj(CART_ACTION_TYPES.SET_DROPDOWN_VISIBLE, { isDropdownVisible: !isDropdownVisible }));
+    }
 
     //#endregion
 

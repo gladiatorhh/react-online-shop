@@ -4,7 +4,7 @@ const DataInput = ({ label, ...otherProps }) => {
     return (
         <FormGroup>
             <FormInput {...otherProps} />
-            {label && <FormInputLabel>{label}</FormInputLabel>}
+            {label && <FormInputLabel shrink={otherProps.value.length}>{label}</FormInputLabel>}
         </FormGroup>);
 }
 

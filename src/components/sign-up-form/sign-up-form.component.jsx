@@ -5,7 +5,6 @@ import { createUserByEmailAndPassword, addUserFromAuth } from "../../utilities/f
 
 import DataInput from "../data-input/data-input.component";
 import Button from "../button/button.component";
-import { UserContext } from "../../contexts/user.context";
 
 
 import { SingUpContainer } from "./sign-up-form.styles";
@@ -21,7 +20,6 @@ const defaultFormFields = {
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
-    const { userData } = useContext(UserContext);
 
     const handelSubmit = async (event) => {
         event.preventDefault();
