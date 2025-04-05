@@ -1,14 +1,17 @@
-import { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { CartContext } from "../../contexts/cart.context";
+import { setDropdownVisibility } from "../../store/cart/cart.actions";
+import { getUserCartItemsCountSelector, getCartVisibilitySelector } from "../../store/cart/cart.selectors";
 
 import { CartIconContainer, ShoppingCartIcon, ItemCount } from "./cart-icon.styles";
 
 const CartIcon = () => {
-    const { isDropdownVisible, setDropdownVisibility, cartItemsCount } = useContext(CartContext);
+    const dispatch = useDispatch();
+    const isDropdownVisible = useSelector(getCartVisibilitySelector);
+    const cartItemsCount = useSelector(getUserCartItemsCountSelector);
 
     const toggleDropdown = () => {
-        setDropdownVisibility(!isDropdownVisible);
+        dispatch(setDropdownVisibility(isDropdownVisible))
     };
 
     return (
