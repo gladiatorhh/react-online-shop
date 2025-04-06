@@ -14,4 +14,9 @@ export const getCategoriesMapSelector = createSelector(
             const { title, items } = category;
             acc[title.toLowerCase()] = items;
             return acc;
-        }, [])); 
+        }, []));
+
+export const getCategoriesFetchIsLoadingSelector = createSelector(
+    [getCategoriesSlice],
+    (slice) => slice.isLoading
+);
