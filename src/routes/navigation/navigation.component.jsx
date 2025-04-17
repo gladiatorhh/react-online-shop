@@ -11,6 +11,8 @@ import { setCurrentUser } from "../../store/user/user.actions";
 import { getCurrentUserSelector } from "../../store/user/user.selectors";
 import { getCartVisibilitySelector } from "../../store/cart/cart.selectors";
 
+import { singOut } from "../../store/user/user.actions";
+
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg"
 import { NavigationContainer, LogoContainer, NavigationLinksContainer, NavigationLinks } from "./navigation.styles"
 
@@ -21,8 +23,7 @@ const Navigation = () => {
     const isDropdownVisible = useSelector(getCartVisibilitySelector);
 
     const signOutHandler = async () => {
-        await signOutUser();
-        dispatch(setCurrentUser(null));
+        dispatch(singOut())
     };
 
     return (<Fragment>

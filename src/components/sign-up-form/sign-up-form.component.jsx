@@ -1,11 +1,10 @@
-import { useState, useContext } from "react";
-import { requestFormReset } from "react-dom";
-
-import { createUserByEmailAndPassword, addUserFromAuth } from "../../utilities/firebase/firebase.utils";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import DataInput from "../data-input/data-input.component";
 import Button from "../button/button.component";
 
+import { signUpStart } from "../../store/user/user.actions";
 
 import { SingUpContainer } from "./sign-up-form.styles";
 
@@ -20,6 +19,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
+    const dispatch = useDispatch();
 
     const handelSubmit = async (event) => {
         event.preventDefault();
@@ -29,8 +29,7 @@ const SignUpForm = () => {
         }
 
         try {
-            let createdUser = await createUserByEmailAndPassword(email, password);
-            addUserFromAuth(createdUser.user, { displayName });
+            dispatch(signUpStart(email, password, displayName));
             setFormFields(defaultFormFields);
         } catch (error) {
             alert("You sign in attempt has failed due to server errors")

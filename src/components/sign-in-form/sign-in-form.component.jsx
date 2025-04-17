@@ -1,12 +1,12 @@
 import { useState } from "react";
-
-import { signInWithGooglePopup, addUserFromAuth, signInWithEmailAndPasswordFromAuth } from "../../utilities/firebase/firebase.utils";
+import { useDispatch, useSelector } from "react-redux";
 
 import DataInput from "../data-input/data-input.component";
 import Button, { buttonTypes } from "../button/button.component";
-
-
 import { SignInContainer, SignInFormButtonsContainer } from "./sign-in-form.styles";
+
+import { googleSignInStart, emailSignInStart } from "../../store/user/user.actions";
+import {getErrorSelector} from "../../store/user/user.selectors";
 
 
 const defaultFiles = {
@@ -17,7 +17,21 @@ const defaultFiles = {
 const SignInForm = () => {
     const [fieldsData, setFieldsData] = useState(defaultFiles);
     const { email, password } = fieldsData;
+    const dispatch = useDispatch();
+    const loginError = useSelector(getErrorSelector);
 
+    switch (loginError) {
+        case null: break;
+        case "auth/invalid-credential":
+            alert("You have entered the wrong credentials");
+            break;
+        case "auth/user-not-found":
+            alert("No user associated with this email and password was found");
+            break;
+        default:
+            alert("Failed to log you in",loginError);
+            break;
+    }
 
     const handelChange = (event) => {
         const { value, name } = event.target;
@@ -25,24 +39,14 @@ const SignInForm = () => {
         setFieldsData({ ...fieldsData, [name]: value });
     }
 
-    const handelSubmit = async (event) => {
+    const signInWithGoogleHandler = () => {
+        dispatch(googleSignInStart());
+    }
+
+    const handelSubmit = (event) => {
         event.preventDefault();
-        try {
-            await signInWithEmailAndPasswordFromAuth(email, password);
-            setFieldsData(defaultFiles);
-        } catch (error) {
-            switch (error.code) {
-                case "auth/invalid-credential":
-                    alert("You have entered the wrong credentials");
-                    break;
-                case "auth/user-not-found":
-                    alert("No user associated with this email and password was found");
-                    break;
-                default:
-                    alert("Failed to log you in");
-                    console.log(error)
-            }
-        }
+        dispatch(emailSignInStart(email, password));
+        setFieldsData(defaultFiles);
     }
 
     return (
@@ -53,7 +57,7 @@ const SignInForm = () => {
                 <DataInput label="Password" type="password" required name="password" onChange={handelChange} value={password} />
                 <SignInFormButtonsContainer>
                     <Button type="submit">Sign In</Button>
-                    <Button buttonType={buttonTypes.google} type="button" onClick={signInWithGooglePopup}>Sign in with google</Button>
+                    <Button buttonType={buttonTypes.google} type="button" onClick={signInWithGoogleHandler}>Sign in with google</Button>
                 </SignInFormButtonsContainer>
             </form>
         </SignInContainer>);
