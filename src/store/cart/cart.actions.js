@@ -72,5 +72,8 @@ export const removeItemFromCart = (currentCart, item) =>
 export const clearItemFromCart = (currentCart, item) =>
     generateDispatchObj(CART_ACTION_TYPES.CHANGE_CART_ITEMS, deleteItemFromCart(currentCart, item));
 
+export const clearCart = () => 
+    generateDispatchObj(CART_ACTION_TYPES.CHANGE_CART_ITEMS, []);
+
 export const setDropdownVisibility = (isDropdownVisible) =>
     generateDispatchObj(CART_ACTION_TYPES.SET_DROPDOWN_VISIBLE, !isDropdownVisible);
