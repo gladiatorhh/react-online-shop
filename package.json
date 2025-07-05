@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.3.1",
     "cra-template": "1.2.0",
+    "dotenv": "^17.0.1",
     "firebase": "^11.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -17,6 +21,7 @@
     "redux-thunk": "^3.1.0",
     "reselect": "^5.1.1",
     "sass": "^1.84.0",
+    "stripe": "^18.3.0",
     "styled-components": "^6.1.15",
     "web-vitals": "^4.2.4"
   },

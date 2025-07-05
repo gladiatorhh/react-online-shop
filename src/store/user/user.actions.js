@@ -8,7 +8,7 @@ export const checkUserSession = () => generateDispatchObj(USER_ACTION_TYPE.CHECK
 
 export const googleSignInStart = () => generateDispatchObj(USER_ACTION_TYPE.GOOGLE_SIGN_IN_START);
 
-export const emailSignInStart = () => generateDispatchObj(USER_ACTION_TYPE.EMAIL_SIGN_IN_START);
+export const emailSignInStart = (email,password) => generateDispatchObj(USER_ACTION_TYPE.EMAIL_SIGN_IN_START,{email,password});
 
 export const signInSuccess = (user) => generateDispatchObj(USER_ACTION_TYPE.SING_IN_SUCCESS, user);
 
@@ -20,4 +20,8 @@ export const signUpSuccess = (user, additionalDetails) => generateDispatchObj(US
 
 export const signUpFailed = (error) => generateDispatchObj(USER_ACTION_TYPE.SIGN_UP_FAILED, error);
 
-export const singOut = () => generateDispatchObj(USER_ACTION_TYPE.SIGN_OUT);
+export const singOutUser = () => generateDispatchObj(USER_ACTION_TYPE.SIGN_OUT_SUCCESS);
+
+export const singOutStart = () => generateDispatchObj(USER_ACTION_TYPE.SIGN_OUT_START);
+
+export const singOutFailed = (error) => generateDispatchObj(USER_ACTION_TYPE.SIGN_OUT_FAILED, error);

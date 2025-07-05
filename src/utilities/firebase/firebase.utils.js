@@ -41,7 +41,7 @@ provider.setCustomParameters({
     prompt: "select_account"
 });
 
-export const auth = getAuth();
+export const auth = getAuth(app);
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
 export const db = getFirestore();

@@ -6,7 +6,7 @@ import Button, { buttonTypes } from "../button/button.component";
 import { SignInContainer, SignInFormButtonsContainer } from "./sign-in-form.styles";
 
 import { googleSignInStart, emailSignInStart } from "../../store/user/user.actions";
-import {getErrorSelector} from "../../store/user/user.selectors";
+import { getErrorSelector } from "../../store/user/user.selectors";
 
 
 const defaultFiles = {
@@ -18,20 +18,6 @@ const SignInForm = () => {
     const [fieldsData, setFieldsData] = useState(defaultFiles);
     const { email, password } = fieldsData;
     const dispatch = useDispatch();
-    const loginError = useSelector(getErrorSelector);
-
-    switch (loginError) {
-        case null: break;
-        case "auth/invalid-credential":
-            alert("You have entered the wrong credentials");
-            break;
-        case "auth/user-not-found":
-            alert("No user associated with this email and password was found");
-            break;
-        default:
-            alert("Failed to log you in",loginError);
-            break;
-    }
 
     const handelChange = (event) => {
         const { value, name } = event.target;
@@ -44,9 +30,23 @@ const SignInForm = () => {
     }
 
     const handelSubmit = (event) => {
-        event.preventDefault();
-        dispatch(emailSignInStart(email, password));
-        setFieldsData(defaultFiles);
+        try {
+            event.preventDefault();
+            dispatch(emailSignInStart(email, password));
+            setFieldsData(defaultFiles);
+        } catch (error) {
+            switch (error) {
+                case "auth/invalid-credential":
+                    alert("You have entered the wrong credentials");
+                    break;
+                case "auth/user-not-found":
+                    alert("No user associated with this email and password was found");
+                    break;
+                default:
+                    alert("Failed to log you in", error);
+                    break;
+            }
+        }
     }
 
     return (
